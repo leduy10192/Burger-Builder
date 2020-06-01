@@ -20,13 +20,14 @@ class BurgerBuilder extends Component {
     state = {
         ingredients: null,
         totalPrice: 4,
-        purchasable: false,
+        purchasable: true,
         purchasing: false,
         loading: false,
         error: false
     }
 
     componentDidMount() {
+        console.log('Burger Builder', this.props)
         axios.get('/ingredients.json')
             .then(response => {
                 this.setState({ ingredients: response.data })
@@ -85,25 +86,37 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        this.setState({ loading: true })
-        const order = {
-            ingredients: this.state.ingredients,
-            //real-app: recalculate the price on the server
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Duy Le',
-                address: {
-                    street: 'TestStreet 1',
-                    zipCode: '94111',
-                    country: 'USA'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'express'
-        }
-        axios.post('/orders.json', order)
-            .then(response => this.setState({ loading: false, purchasing: false }))
-            .catch(error => this.setState({ loading: false, purchasing: false }));
+        // no longer want to store on firebase immediately but go to checkout instead
+        // this.setState({ loading: true })
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     //real-app: recalculate the price on the server
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Duy Le',
+        //         address: {
+        //             street: 'TestStreet 1',
+        //             zipCode: '94111',
+        //             country: 'USA'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'express'
+        // }
+        // axios.post('/orders.json', order)
+        //     .then(response => this.setState({ loading: false, purchasing: false }))
+        //     .catch(error => this.setState({ loading: false, purchasing: false }));
+        const queryParams = [];
+        for (let i in this.state.ingredients){
+            //properties' name = value
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
+        };
+        const queryString = queryParams.join('&');
+
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
     render() {
         const disabledInfo = {
