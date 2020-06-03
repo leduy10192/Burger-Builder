@@ -11,10 +11,10 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-order';
 
 const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
+    salad: 0.554,
+    cheese: 0.432,
+    meat: 1.43,
+    bacon: 0.447
 }
 class BurgerBuilder extends Component {
     state = {
@@ -87,30 +87,14 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         // no longer want to store on firebase immediately but go to checkout instead
-        // this.setState({ loading: true })
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     //real-app: recalculate the price on the server
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Duy Le',
-        //         address: {
-        //             street: 'TestStreet 1',
-        //             zipCode: '94111',
-        //             country: 'USA'
-        //         },
-        //         email: 'test@test.com'
-        //     },
-        //     deliveryMethod: 'express'
-        // }
-        // axios.post('/orders.json', order)
-        //     .then(response => this.setState({ loading: false, purchasing: false }))
-        //     .catch(error => this.setState({ loading: false, purchasing: false }));
+
         const queryParams = [];
         for (let i in this.state.ingredients){
             //properties' name = value
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
         };
+        queryParams.push('price=' + this.state.totalPrice)
+        
         const queryString = queryParams.join('&');
 
         this.props.history.push({

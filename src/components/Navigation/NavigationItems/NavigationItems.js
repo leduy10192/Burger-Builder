@@ -8,10 +8,8 @@ const navigationItems = (props) => {
     // console.log('Checkout', props)
     return(
     <ul className={classes.NavigationItems}>
-        <NavigationItem link="/" active>BurgerBuilder</NavigationItem>
-        <Link to='/checkout'>
-            <NavigationItem link="/">Checkout</NavigationItem>
-        </Link>
+        <NavigationItem link="/" exact>BurgerBuilder</NavigationItem>
+        <NavigationItem link="/orders">Orders</NavigationItem>
     </ul>
     )
 };
