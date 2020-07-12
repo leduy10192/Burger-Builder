@@ -1,0 +1,17 @@
+/*Copied from ContactData.module.css */
+.Auth {
+    margin: 20px auto;     /* top and bottom */
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* If [device width] is greater than or equal to 600px, then do {…}”*/
+@media (min-width: 600px){
+    .Auth{
+        width: 500px;
+    }
+}
