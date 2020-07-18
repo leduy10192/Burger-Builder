@@ -22,11 +22,11 @@ export const purchaseBurgerStart = () => {
         type: actionTypes.PURCHASE_BURGER_START,
     }
 }
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseBurgerStart());
         //copy from ContactData/orderHandler func
-        axios.post('/orders.json', orderData)
+        axios.post('/orders.json?auth=' + token, orderData)
         .then(response => {
             console.log(response.data)
             dispatch(purchaseBurgerSuccess(response.data.name, orderData))
@@ -63,10 +63,11 @@ export const fetchOrderStart = () => {
     }
 }
 
-export const fetchOrder = () => {
+export const fetchOrder = (token, userId) => {
     return dispatch => {
         dispatch(fetchOrderStart());
-        axios.get('/orders.json') // if we delete json, then UI will show network Error
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId+ '"';//string should be in  ""
+        axios.get('/orders.json' + queryParams) // if we delete json, then UI will show network Error
         .then( res => {
             console.log(res.data)
             const fetchedOrders = [];

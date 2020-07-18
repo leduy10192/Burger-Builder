@@ -12,6 +12,6 @@
 /* If [device width] is greater than or equal to 600px, then do {…}”*/
 @media (min-width: 600px){
     .Auth{
-        width: 500px;
+        width: 400px;
     }
 }

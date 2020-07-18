@@ -15,7 +15,7 @@ class Orders extends Component {
     // }
     //fetch order when the component mounts
     componentDidMount () {
-        this.props.onFetchOrders();
+        this.props.onFetchOrders(this.props.token, this.props.userId);
         // axios.get('/orders.json') // if we delete json, then UI will show network Error
         //     .then( res => {
         //         console.log(res.data)
@@ -55,12 +55,14 @@ class Orders extends Component {
 const mapStateToProps = state => {
     return {
         orders: state.order.orders,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,//get the token from our redux state
+        userId: state.auth.userId
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () =>  dispatch(actions.fetchOrder())
+        onFetchOrders: (token, userId) =>  dispatch(actions.fetchOrder(token, userId))
     }
 }
 
