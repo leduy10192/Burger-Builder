@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-order';
-import { act } from 'react-dom/test-utils';
+// import { act } from 'react-dom/test-utils';
 
 export const purchaseBurgerSuccess = (id, orderData) => {
     return {
@@ -28,7 +28,7 @@ export const purchaseBurger = (orderData, token) => {
         //copy from ContactData/orderHandler func
         axios.post('/orders.json?auth=' + token, orderData)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             dispatch(purchaseBurgerSuccess(response.data.name, orderData))
         })
         .catch(error => {
@@ -69,7 +69,7 @@ export const fetchOrder = (token, userId) => {
         const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId+ '"';//string should be in  ""
         axios.get('/orders.json' + queryParams) // if we delete json, then UI will show network Error
         .then( res => {
-            console.log(res.data)
+            // console.log(res.data)
             const fetchedOrders = [];
             for (let key in res.data) {
                 fetchedOrders.push({

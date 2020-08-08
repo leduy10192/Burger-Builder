@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Aux/Aux';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
+// import * as actionTypes from '../../store/actions/actionTypes';
 //Rename to actions
 import * as actions from "../../store/actions/index" // we can omit index, index will auto pick index
 
@@ -13,10 +13,10 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios-order';
-import burger from '../../components/Burger/Burger';
+// import burger from '../../components/Burger/Burger';
 
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     state = {
         purchasing: false,
         // loading: false,
@@ -24,7 +24,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
-        console.log('Burger Builder', this.props)
+        // console.log('Burger Builder', this.props)
         // axios.get('/ingredients.json')
         //     .then(response => {
         //         this.setState({ ingredients: response.data })

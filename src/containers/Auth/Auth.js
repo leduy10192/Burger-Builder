@@ -8,6 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
+import { updateObject, checkValidity } from '../../shared/utility';
 
 class Auth extends Component {
     state = {
@@ -52,44 +53,26 @@ class Auth extends Component {
             this.props.onSetAuthRedirectPath()
         }
     }
-    checkValidity(value, rules) {
-        //return true or false whether it is valid or not and inputChangedHandler adjust this valid prop too
-        // add && isValid so isValid does not depend on only the last if statement
-        let isValid = true;
-        if (!rules) {
-            return true;
-        }
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-        return isValid
-    }
 
     inputChangedHandler = (event, controlName) => {
         //another way to update state is implemented in ContactData inputChangedHanlder
-        const updatedControls = {
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
+        // const updatedControls = {
+        //     ...this.state.controls,
+        //     [controlName]: {
+        //         ...this.state.controls[controlName],
+        //         value: event.target.value,
+        //         valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+        //         touched: true //when user did type something
+        //     }
+        // }
+
+        const updatedControls = updateObject(this.state.controls, {
+            [controlName]: updateObject(this.state.controls[controlName],{
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
                 touched: true //when user did type something
-            }
-        }
+            })
+        })
         //we won't disable the submit button for invalid forms because we want to show what happens if we submit invalid forms
         this.setState({controls: updatedControls})
     }
