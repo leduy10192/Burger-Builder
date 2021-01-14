@@ -1,4 +1,4 @@
-import{ put, delay } from 'redux-saga/effects'; //it delays the execution of the next step
+import{ put, delay, call } from 'redux-saga/effects'; //it delays the execution of the next step
 // import * as actionTypes from '../actions/actionTypes';
 import * as actions from '../actions/index';
 import axios from 'axios';
@@ -11,9 +11,12 @@ import axios from 'axios';
 //each step has to finished for the next step to execute (even async)
 export function* logoutSaga(action) {
     //copy from actions/auth.js
-    yield localStorage.removeItem('token');
-    yield localStorage.removeItem('expirationDate');
-    yield localStorage.removeItem('userId');
+    yield call([localStorage, 'removeItem'], "token");
+    yield call([localStorage, 'removeItem'], "expirationDate");
+    yield call([localStorage, 'removeItem'], "userId");
+    // yield localStorage.removeItem('token');
+    // yield localStorage.removeItem('expirationDate');
+    // yield localStorage.removeItem('userId');
     yield put(actions.logoutSucceed());
 }
 
